@@ -1,0 +1,24 @@
+{
+  "name": "correlation-id",
+  "version": "0.0.1",
+  "description": "Correlation id for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toboid/correlation-id.git"
+  },
+  "keywords": [
+    "logging",
+    "correlation",
+    "debug"
+  ],
+  "author": "Toboid",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/toboid/correlation-id/issues"
+  },
+  "homepage": "https://github.com/toboid/correlation-id#readme"
+}
