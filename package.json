@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/toboid/correlation-id/issues"
   },
-  "homepage": "https://github.com/toboid/correlation-id#readme"
+  "homepage": "https://github.com/toboid/correlation-id#readme",
+  "dependencies": {
+    "continuation-local-storage": "^3.2.0",
+    "uuid": "^2.0.3"
+  }
 }
