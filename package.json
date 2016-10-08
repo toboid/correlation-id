@@ -23,6 +23,7 @@
   "homepage": "https://github.com/toboid/correlation-id#readme",
   "dependencies": {
     "continuation-local-storage": "^3.2.0",
+    "express": "^4.14.0",
     "uuid": "^2.0.3"
   }
 }

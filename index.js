@@ -5,14 +5,22 @@ const cls = require('continuation-local-storage');
 
 const defaultCorrelatorStore = cls.createNamespace('1d0e0c48-3375-46bc-b9ae-95c63b58938e');
 
-defaultCorrelatorStore.set('correlator', uuid.v4());
+// TODO: what are the implications of this?
+var stores = new Set()
 
 function createCorrelator (name) {
   if (name == null) {
     throw new Error('Must supply correlator name');
   }
 
-  const correlatorStore = cls.createNamespace(name);
+  let correlatorStore;
+
+  if (stores.has(name)) {
+     correlatorStore = cls.getNamespace(name);
+  } else {
+    correlatorStore =  cls.createNamespace(name);
+    stores.add(name);
+  }
 
   return {
     begin: begin.bind(null, correlatorStore),
@@ -21,14 +29,16 @@ function createCorrelator (name) {
 }
 
 function begin (store, work) {
-  store.run(() => {
-    store.set('correlator', uuid.v4());
-    work();
-  })
+  return (...args) => {
+    store.run(() => {
+      store.set('correlator', uuid.v4());
+      work(...args);
+    })
+  }
 }
 
 function get (store) {
-  store.get('correlator');
+  return store.get('correlator');
 }
 
 createCorrelator.begin = begin.bind(null, defaultCorrelatorStore)
