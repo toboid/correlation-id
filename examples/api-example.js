@@ -17,7 +17,7 @@ function getRandomNumber (callback) {
   setTimeout(() => {
     console.log(`${correlator.getId()} getting random number`);
 
-    callback(null, Math.floor(Math.random() * 1000))
+    callback(null, Math.floor(Math.random() * 1000));
   }, 3000);
 }
 

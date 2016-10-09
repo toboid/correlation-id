@@ -2,7 +2,7 @@
 
 const express = require('express');
 const app = express();
-const correlator = require('../index.js')
+const correlator = require('../index.js');
 
 app.use((req, res, next) => {
   correlator.withId(next);
@@ -20,7 +20,7 @@ function getRandomNumber (callback) {
   setTimeout(() => {
     console.log(`${correlator.getId()} getting random number`);
 
-    callback(null, Math.floor(Math.random() * 1000))
+    callback(null, Math.floor(Math.random() * 1000));
   }, 3000);
 }
 

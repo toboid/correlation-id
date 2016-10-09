@@ -2,7 +2,6 @@
 Prototype correlation id for node.js
 
 ## TODO:
-- [ ] eslint
 - [ ] CI
 - [ ] Coverage
 - [ ] readme

@@ -4,7 +4,8 @@
   "description": "Correlation id for node.js",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "lint": "eslint index.js test/*.js examples/*.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,8 @@
   },
   "devDependencies": {
     "ava": "^0.16.0",
+    "eslint": "^3.7.1",
+    "eslint-config-toboid": "^1.1.0",
     "express": "^4.14.0"
   }
 }

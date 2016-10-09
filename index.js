@@ -9,7 +9,7 @@ function withId (work) {
   store.run(() => {
     store.set('correlator', uuid.v4());
     work();
-  })
+  });
 }
 
 function bindId (work) {
@@ -17,8 +17,8 @@ function bindId (work) {
     store.run(() => {
       store.set('correlator', uuid.v4());
       work(...args);
-    })
-  }
+    });
+  };
 }
 
 function getId () {
@@ -29,4 +29,4 @@ module.exports = {
   withId,
   bindId,
   getId
-}
+};

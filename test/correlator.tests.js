@@ -78,7 +78,7 @@ test.cb('nested bindId correlator', t => {
       t.not(actualInnerScope, actualOuterScope1, 'correlator.getId() should return a different id for eachcorrect id for scope');
       t.regex(actualInnerScope, uuidMatcher, 'correlator.getId() should return a uuid');
     });
-    innerBoundFunction()
+    innerBoundFunction();
     const actualOuterScope2 = correlator.getId();
     t.is(actualOuterScope2, actualOuterScope1, 'correlator.getId() should return the same id within correlation scope');
     t.regex(actualOuterScope2, uuidMatcher, 'correlator.getId() should return a uuid');
