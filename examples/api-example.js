@@ -5,8 +5,8 @@ const correlator = require('../index.js')
 
 const server = http.createServer((req, res) => {
   correlator.withId(() => {
-    console.log(`${correlator.get()} requested url ${req.url}`);
-    
+    console.log(`${correlator.getId()} requested url ${req.url}`);
+
     getRandomNumber((err, randomNumber) => {
       res.end(`Random number: ${randomNumber}`);
     });
@@ -15,7 +15,7 @@ const server = http.createServer((req, res) => {
 
 function getRandomNumber (callback) {
   setTimeout(() => {
-    console.log(`${correlator.get()} getting random number`);
+    console.log(`${correlator.getId()} getting random number`);
 
     callback(null, Math.floor(Math.random() * 1000))
   }, 3000);

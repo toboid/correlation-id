@@ -21,12 +21,12 @@ function bindId (work) {
   }
 }
 
-function get () {
+function getId () {
   return store.get('correlator');
 }
 
 module.exports = {
   withId,
   bindId,
-  get
+  getId
 }
