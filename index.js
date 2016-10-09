@@ -24,6 +24,7 @@ function createCorrelator (name) {
 
   return {
     withId: withId.bind(null, correlatorStore),
+    bindId: bindId.bind(null, correlatorStore),
     get: get.bind(null, correlatorStore)
   };
 }
