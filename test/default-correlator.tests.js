@@ -52,3 +52,37 @@ test.cb('bindId correlator with arguments', t => {
   });
   boundFunction('firstArg', 'secondArg');
 });
+
+test.cb('nested withId correlator', t => {
+  correlator.withId(() => {
+    const actualOuterScope1 = correlator.get();
+    t.regex(actualOuterScope1, uuidMatcher, 'correlator.get() should return a uuid');
+    correlator.withId(() => {
+      const actualInnerScope = correlator.get();
+      t.not(actualInnerScope, actualOuterScope1, 'correlator.get() should return a different id for eachcorrect id for scope');
+      t.regex(actualInnerScope, uuidMatcher, 'correlator.get() should return a uuid');
+    });
+    const actualOuterScope2 = correlator.get();
+    t.is(actualOuterScope2, actualOuterScope1, 'correlator.get() should return the same id within correlation scope');
+    t.regex(actualOuterScope2, uuidMatcher, 'correlator.get() should return a uuid');
+    t.end();
+  });
+});
+
+test.cb('nested bindId correlator', t => {
+  const outerBoundFunction = correlator.bindId(() => {
+    const actualOuterScope1 = correlator.get();
+    t.regex(actualOuterScope1, uuidMatcher, 'correlator.get() should return a uuid');
+    const innerBoundFunction = correlator.bindId(() => {
+      const actualInnerScope = correlator.get();
+      t.not(actualInnerScope, actualOuterScope1, 'correlator.get() should return a different id for eachcorrect id for scope');
+      t.regex(actualInnerScope, uuidMatcher, 'correlator.get() should return a uuid');
+    });
+    innerBoundFunction()
+    const actualOuterScope2 = correlator.get();
+    t.is(actualOuterScope2, actualOuterScope1, 'correlator.get() should return the same id within correlation scope');
+    t.regex(actualOuterScope2, uuidMatcher, 'correlator.get() should return a uuid');
+    t.end();
+  });
+  outerBoundFunction();
+});
