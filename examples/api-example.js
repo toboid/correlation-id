@@ -3,12 +3,15 @@
 const http = require('http');
 const correlator = require('../index.js')
 
-const server = http.createServer(correlator.bindId((req, res) => {
-  console.log(`${correlator.get()} requested url ${req.url}`);
-  getRandomNumber((err, randomNumber) => {
-    res.end(`Random number: ${randomNumber}`);
-  });
-}));
+const server = http.createServer((req, res) => {
+  correlator.withId(() => {
+    console.log(`${correlator.get()} requested url ${req.url}`);
+    
+    getRandomNumber((err, randomNumber) => {
+      res.end(`Random number: ${randomNumber}`);
+    });
+  })
+});
 
 function getRandomNumber (callback) {
   setTimeout(() => {
