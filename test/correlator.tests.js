@@ -86,3 +86,17 @@ test.cb('nested bindId correlator', t => {
   });
   outerBoundFunction();
 });
+
+test.cb('withId works with native promises', t => {
+  function promiseForId () {
+    return Promise.resolve(correlator.getId());
+  }
+
+  correlator.withId(() => {
+    promiseForId()
+      .then(id => {
+        t.regex(id, uuidMatcher, 'Promise should resolve correlation id');
+        t.end();
+      });
+  });
+});
