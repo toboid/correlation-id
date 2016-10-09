@@ -5,7 +5,7 @@ const cls = require('continuation-local-storage');
 
 const defaultCorrelatorStore = cls.createNamespace('1d0e0c48-3375-46bc-b9ae-95c63b58938e');
 
-// TODO: what are the implications of this?
+// TODO: what are the implications of this? Might be able to try and get the namespace and just create it if it doesn't exist
 var stores = new Set()
 
 function createCorrelator (name) {
