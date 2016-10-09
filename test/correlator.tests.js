@@ -22,3 +22,33 @@ test.cb('withId correlator for async function', t => {
     });
   });
 });
+
+test.cb('bindId correlator for sync function', t => {
+  const boundFunction = correlator.bindId(() => {
+    const actual = correlator.get();
+    t.regex(actual, uuidMatcher, 'get() should return a uuid');
+    t.end();
+  });
+  boundFunction();
+});
+
+test.cb('bind correlator for async function', t => {
+  const boundFunction = correlator.bindId(() => {
+    setTimeout(() => {
+      const actual = correlator.get();
+      t.regex(actual, uuidMatcher, 'get() should return a uuid');
+      t.end();
+    });
+  });
+  boundFunction();
+});
+
+test.cb('bindId correlator with arguments', t => {
+  const boundFunction = correlator.bindId((...args) => {
+    const actual = args;
+    const expected = ['firstArg', 'secondArg'];
+    t.deepEqual(actual, expected, 'bindId() should return a function that forwards arguments');
+    t.end();
+  });
+  boundFunction('firstArg', 'secondArg');
+});

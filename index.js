@@ -35,12 +35,9 @@ function withId (store, work) {
   })
 }
 
-function _bind (store, work) {
-  console.log('begginging');
+function bindId (store, work) {
   return (...args) => {
-    console.log('args', args);
     store.run(() => {
-      console.log('running');
       store.set('correlator', uuid.v4());
       work(...args);
     })
@@ -53,7 +50,7 @@ function get (store) {
 
 createCorrelator.withId = withId.bind(null, defaultCorrelatorStore)
 
-createCorrelator.bind = _bind.bind(null, defaultCorrelatorStore)
+createCorrelator.bindId = bindId.bind(null, defaultCorrelatorStore)
 
 createCorrelator.get = get.bind(null, defaultCorrelatorStore)
 
