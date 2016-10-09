@@ -10,7 +10,7 @@ const server = http.createServer((req, res) => {
     getRandomNumber((err, randomNumber) => {
       res.end(`Random number: ${randomNumber}`);
     });
-  })
+  });
 });
 
 function getRandomNumber (callback) {
