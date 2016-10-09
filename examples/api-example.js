@@ -1,7 +1,7 @@
 'use strict';
 
 const http = require('http');
-const correlator = require('../index.js')
+const correlator = require('../index.js');
 
 const server = http.createServer((req, res) => {
   correlator.withId(() => {

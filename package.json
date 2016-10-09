@@ -26,6 +26,7 @@
     "uuid": "^2.0.3"
   },
   "devDependencies": {
-    "ava": "^0.16.0"
+    "ava": "^0.16.0",
+    "express": "^4.14.0"
   }
 }
