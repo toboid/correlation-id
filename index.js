@@ -23,14 +23,24 @@ function createCorrelator (name) {
   }
 
   return {
-    begin: begin.bind(null, correlatorStore),
+    withId: withId.bind(null, correlatorStore),
     get: get.bind(null, correlatorStore)
   };
 }
 
-function begin (store, work) {
+function withId (store, work) {
+  store.run(() => {
+    store.set('correlator', uuid.v4());
+    work();
+  })
+}
+
+function _bind (store, work) {
+  console.log('begginging');
   return (...args) => {
+    console.log('args', args);
     store.run(() => {
+      console.log('running');
       store.set('correlator', uuid.v4());
       work(...args);
     })
@@ -41,7 +51,9 @@ function get (store) {
   return store.get('correlator');
 }
 
-createCorrelator.begin = begin.bind(null, defaultCorrelatorStore)
+createCorrelator.withId = withId.bind(null, defaultCorrelatorStore)
+
+createCorrelator.bind = _bind.bind(null, defaultCorrelatorStore)
 
 createCorrelator.get = get.bind(null, defaultCorrelatorStore)
 
