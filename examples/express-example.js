@@ -11,6 +11,10 @@ app.use((req, res, next) => {
 app.get('*', (req, res) => {
   console.log(`${correlator.getId()} requested url ${req.url}`);
 
+  res.on('finish', () => {
+    console.log(`ID within finish is ${correlator.getId()}`);
+  })
+
   getRandomNumber((err, randomNumber) => {
     res.send(`Random number: ${randomNumber}`);
   });
