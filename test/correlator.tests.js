@@ -1,6 +1,8 @@
 'use strict';
 
 const test = require('ava');
+const express = require('express');
+const request = require('supertest');
 const correlator = require('../index');
 
 const uuidMatcher = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
@@ -107,4 +109,20 @@ test('withId throws for missing paramter', t => {
 
 test('bindId throws for missing paramter', t => {
   t.throws(() => correlator.bindId(), 'Missing work parameter', 'bindId() should throw if work parameter is missing');
+});
+
+test.cb('express middleware', t => {
+  t.plan(1);
+
+  const app = express();
+  app.use(correlator.middleware());
+  app.get('/', (req, res) => {
+    const actual = correlator.getId();
+    t.regex(actual, uuidMatcher, 'getId() should return a uuid');
+    res.end()
+  });
+
+  request(app)
+    .get('/')
+    .end(t.end)
 });

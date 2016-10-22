@@ -29,8 +29,18 @@ function getId () {
   return store.get('correlator');
 }
 
+function middleware () {
+  return (req, res, next) => {
+    store.run(() => {
+      store.set('correlator', uuid.v4());
+      next();
+    });
+  };
+}
+
 module.exports = {
   withId,
   bindId,
-  getId
+  getId,
+  middleware
 };
