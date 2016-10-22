@@ -100,3 +100,11 @@ test.cb('withId works with native promises', t => {
       });
   });
 });
+
+test('withId throws for missing paramter', t => {
+  t.throws(() => correlator.withId(), 'Missing work parameter', 'withId() should throw if work parameter is missing');
+});
+
+test('bindId throws for missing paramter', t => {
+  t.throws(() => correlator.bindId(), 'Missing work parameter', 'bindId() should throw if work parameter is missing');
+});
