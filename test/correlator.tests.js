@@ -32,7 +32,7 @@ test.cb('bindId correlator for sync function', t => {
   boundFunction();
 });
 
-test.cb('bind correlator for async function', t => {
+test.cb('bindId correlator for async function', t => {
   const boundFunction = correlator.bindId(() => {
     setTimeout(() => {
       const actual = correlator.getId();
