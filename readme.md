@@ -68,6 +68,8 @@ boundFunction('foo') // Writes 'p1 is foo' and then a uuid to stdout
 ### `getId()`
 Returns a uuid for the current correlation scope (created via `withId` or `bindId`). If called outside of a correlation scope returns `undefined`.
 
+## How does it work?
+Currently this module a slim wrapper over [continuation-local-storage](https://github.com/othiym23/node-continuation-local-storage). I intend to move to async-hook when it's generally available.
 
 ## License
 MIT
