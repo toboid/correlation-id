@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const correlator = require('../index.js');
 
-app.use(correlator.middleware());
+app.use(correlator.express());
 
 app.get('*', (req, res) => {
   console.log(`${correlator.getId()} requested url ${req.url}`);

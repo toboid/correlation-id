@@ -29,7 +29,7 @@ function getId () {
   return store.get('correlator');
 }
 
-function middleware () {
+function express () {
   return (req, res, next) => {
     store.run(() => {
       store.set('correlator', uuid.v4());
@@ -42,5 +42,5 @@ module.exports = {
   withId,
   bindId,
   getId,
-  middleware
+  express
 };

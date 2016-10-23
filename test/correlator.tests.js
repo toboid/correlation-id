@@ -115,7 +115,7 @@ test.cb('express middleware', t => {
   t.plan(1);
 
   const app = express();
-  app.use(correlator.middleware());
+  app.use(correlator.express());
   app.get('/', (req, res) => {
     const actual = correlator.getId();
     t.regex(actual, uuidMatcher, 'getId() should return a uuid');
