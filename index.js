@@ -17,10 +17,10 @@ function withId (work) {
 function bindId (work) {
   if (!work) throw new Error('Missing work parameter');
 
-  return (...args) => {
+  return function () {
     store.run(() => {
       store.set('correlator', uuid.v4());
-      work(...args);
+      work.apply(null, [].slice.call(arguments));
     });
   };
 }
