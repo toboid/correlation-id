@@ -119,10 +119,10 @@ test.cb('express middleware', t => {
   app.get('/', (req, res) => {
     const actual = correlator.getId();
     t.regex(actual, uuidMatcher, 'getId() should return a uuid');
-    res.end()
+    res.end();
   });
 
   request(app)
     .get('/')
-    .end(t.end)
+    .end(t.end);
 });
