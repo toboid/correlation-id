@@ -15,7 +15,7 @@ npm i correlation-id --save
 ## Simple example
 As demonstrated by this example, all calls to `getId()` within the same `withId()` block will return the same id.
 ``` javascript
-var correlator = require('correlation-id');
+const correlator = require('correlation-id');
 
 function printCurrentId (name) {
   console.log('%s id: %s', name, correlator.getId())
@@ -41,7 +41,21 @@ correlator.withId(() => {
 // withId block 1, call 2 id: 5816e2d3-6b90-43be-8738-f6e1b2654f39
 ```
 
-## Express example
+## Express middleware
+An express middleware is included. All middleware and route handlers following `correlator.express()` middleware will be within a single correlation scope.
+
+```javascript
+const correlator = require('correlation-id');
+const express = require('express');
+
+const app = express()
+app.use(correlator.express());
+
+app.get('/', (req, res) => {
+  console.log('ID for this request is:', correlator.getId())
+  res.end()
+})
+```
 
 ## API
 ### `withId(work)`
@@ -58,7 +72,7 @@ correlator.withId(() => {
 Returns function `work` bound with a correlation scope. When `work` is executed all calls to `getId()` will return the same id. Arguments passed to the bound function will be propagated to `work`.
 
 ```javascript
-var boundFunction = correlator.bindId((p1) => {
+const boundFunction = correlator.bindId((p1) => {
   console.log('p1 is', p1)
   console.log(correlator.getId())
 })
@@ -67,6 +81,18 @@ boundFunction('foo') // Writes 'p1 is foo' and then a uuid to stdout
 
 ### `getId()`
 Returns a uuid for the current correlation scope (created via `withId` or `bindId`). If called outside of a correlation scope returns `undefined`.
+
+```javascript
+correlator.getId() // Returns a uuid
+```
+
+### `express()`
+Returns an express middleware that creates a correlation scope for all following middleware and route handlers.
+
+```javascript
+const app = express()
+app.use(correlator.express())
+```
 
 ## How does it work?
 Currently this module a slim wrapper over [continuation-local-storage](https://github.com/othiym23/node-continuation-local-storage). I intend to move to async-hook when it's generally available.
