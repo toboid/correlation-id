@@ -31,10 +31,7 @@ function getId () {
 
 function express () {
   return (req, res, next) => {
-    store.run(() => {
-      store.set('correlator', uuid.v4());
-      next();
-    });
+    withId(next)
   };
 }
 
