@@ -29,6 +29,7 @@ correlator.withId(() => {
     printCurrentId('withId block 1, call 2')
   }, 1000);
 });
+
 correlator.withId(() => {
   setTimeout(() => {
     printCurrentId('withId block 2, call 1')
