@@ -1,6 +1,6 @@
 {
   "name": "correlation-id",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Correlation id for node.js",
   "main": "index.js",
   "files": [
