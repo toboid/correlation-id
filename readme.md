@@ -11,9 +11,8 @@ This is extremely useful for logging purposes. For example within a web applicat
 ```shell
 npm i correlation-id --save
 ```
-
 ## Simple example
-As demonstrated by this example, all calls to `getId()` within the same `withId()` block will return the same id.
+As demonstrated by this example, all calls to `getId()` within the same `withId()` block will return the same id. The id can be supplied, otherwise a v4 uuid will be generated.
 ``` javascript
 const correlator = require('correlation-id');
 
@@ -30,7 +29,7 @@ correlator.withId(() => {
   }, 1000);
 });
 
-correlator.withId(() => {
+correlator.withId('my-custom-id', () => {
   setTimeout(() => {
     printCurrentId('withId block 2, call 1')
   }, 500);
@@ -38,7 +37,7 @@ correlator.withId(() => {
 
 // Output:
 // withId block 1, call 1 id: 5816e2d3-6b90-43be-8738-f6e1b2654f39
-// withId block 2, call 1 id: 1f5f051d-0b98-489e-8c46-b9b0a0f9be09
+// withId block 2, call 1 id: my-custom-id
 // withId block 1, call 2 id: 5816e2d3-6b90-43be-8738-f6e1b2654f39
 ```
 
@@ -59,18 +58,20 @@ app.get('/', (req, res) => {
 ```
 
 ## API
-### `withId(work)`
-Executes function `work` within a correlation scope. Within work and any other function executions (sync or async) calls to `getId()` will return the same id.
-Calls to `withId()` may be nested.
+### `withId([id,] work)`
+Executes function `work` within a correlation scope. Within work and any other function executions (sync or async) calls to `getId()` will return the same id. The id for the context may be set explicitly with the optional `id` parameter, otherwise it will be a v4 uuid. Calls to `withId()` may be nested.
 
 ```javascript
 correlator.withId(() => {
   console.log(correlator.getId()) // Writes a uuid to stdout
 })
+correlator.withId('my-custom-id', () => {
+  console.log(correlator.getId()) // Writes 'my-custom-id' to stdout
+})
 ```
 
-### `bindId(work)`
-Returns function `work` bound with a correlation scope. When `work` is executed all calls to `getId()` will return the same id. Arguments passed to the bound function will be propagated to `work`.
+### `bindId([id,] work)`
+Returns function `work` bound with a correlation scope. When `work` is executed all calls to `getId()` will return the same id. The id for the context may be set explicitly with the optional `id` parameter, otherwise it will be a v4 uuid. Arguments passed to the bound function will be applied to `work`.
 
 ```javascript
 const boundFunction = correlator.bindId((p1) => {
@@ -78,10 +79,16 @@ const boundFunction = correlator.bindId((p1) => {
   console.log(correlator.getId())
 })
 boundFunction('foo') // Writes 'p1 is foo' and then a uuid to stdout
+
+const boundFunction2 = correlator.bindId('my-custom-id', (p1) => {
+  console.log('p1 is', p1)
+  console.log(correlator.getId())
+})
+boundFunction('foo') // Writes 'p1 is foo' and then 'my-custom-id' to stdout
 ```
 
 ### `getId()`
-Returns a uuid for the current correlation scope (created via `withId` or `bindId`). If called outside of a correlation scope returns `undefined`.
+Returns the id for the current correlation scope (created via `withId` or `bindId`). If called outside of a correlation scope returns `undefined`.
 
 ```javascript
 correlator.getId() // Returns a uuid
