@@ -8,7 +8,7 @@ function isFunction (object) {
 }
 
 function configureArgs (func) {
-  return function (id, work) {
+  return (id, work) => {
     if (!work && isFunction(id)) {
       work = id;
       id = uuid.v4();
@@ -21,14 +21,14 @@ function configureArgs (func) {
 
 const store = cls.createNamespace('1d0e0c48-3375-46bc-b9ae-95c63b58938e');
 
-const withId = configureArgs(function withId (id, work) {
+const withId = configureArgs((id, work) => {
   store.run(() => {
     store.set('correlator', id);
     work();
   });
 });
 
-const bindId = configureArgs(function bindId (id, work) {
+const bindId = configureArgs((id, work) => {
   return function () {
     store.run(() => {
       store.set('correlator', id);
