@@ -43,6 +43,7 @@ function getId () {
 
 function express () {
   return (req, res, next) => {
+    // TODO: set id if it's present in the incoming request header
     withId(next);
   };
 }
