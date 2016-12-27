@@ -25,6 +25,15 @@ test.cb('withId correlator for async function', t => {
   });
 });
 
+test.cb('withId with supplied id', t => {
+  const testId = 'id-1';
+  correlator.withId(testId, () => {
+    const actual = correlator.getId();
+    t.is(actual, testId, 'getId() should return supplied id');
+    t.end();
+  });
+});
+
 test.cb('bindId correlator for sync function', t => {
   const boundFunction = correlator.bindId(() => {
     const actual = correlator.getId();
@@ -41,6 +50,16 @@ test.cb('bindId correlator for async function', t => {
       t.regex(actual, uuidMatcher, 'getId() should return a uuid');
       t.end();
     });
+  });
+  boundFunction();
+});
+
+test.cb('bindId with supplied id', t => {
+  const testId = 'id-1';
+  const boundFunction = correlator.bindId(testId, () => {
+    const actual = correlator.getId();
+    t.is(actual, testId, 'getId() should return supplied id');
+    t.end();
   });
   boundFunction();
 });
@@ -103,11 +122,11 @@ test.cb('withId works with native promises', t => {
   });
 });
 
-test('withId throws for missing paramter', t => {
+test('withId throws for missing work paramter', t => {
   t.throws(() => correlator.withId(), 'Missing work parameter', 'withId() should throw if work parameter is missing');
 });
 
-test('bindId throws for missing paramter', t => {
+test('bindId throws for missing work paramter', t => {
   t.throws(() => correlator.bindId(), 'Missing work parameter', 'bindId() should throw if work parameter is missing');
 });
 
