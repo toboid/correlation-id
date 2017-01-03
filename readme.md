@@ -17,21 +17,21 @@ As demonstrated by this example, all calls to `getId()` within the same `withId(
 const correlator = require('correlation-id');
 
 function printCurrentId (name) {
-  console.log('%s id: %s', name, correlator.getId())
+  console.log('%s id: %s', name, correlator.getId());
 }
 
 correlator.withId(() => {
   setTimeout(() => {
-    printCurrentId('withId block 1, call 1')
+    printCurrentId('withId block 1, call 1');
   });
   setTimeout(() => {
-    printCurrentId('withId block 1, call 2')
+    printCurrentId('withId block 1, call 2');
   }, 1000);
 });
 
 correlator.withId('my-custom-id', () => {
   setTimeout(() => {
-    printCurrentId('withId block 2, call 1')
+    printCurrentId('withId block 2, call 1');
   }, 500);
 });
 
@@ -47,11 +47,11 @@ Executes function `work` within a correlation scope. Within work and any other f
 
 ```javascript
 correlator.withId(() => {
-  console.log(correlator.getId()) // Writes a uuid to stdout
-})
+  console.log(correlator.getId()); // Writes a uuid to stdout
+});
 correlator.withId('my-custom-id', () => {
-  console.log(correlator.getId()) // Writes 'my-custom-id' to stdout
-})
+  console.log(correlator.getId()); // Writes 'my-custom-id' to stdout
+});
 ```
 
 ### `bindId([id,] work)`
@@ -59,23 +59,23 @@ Returns function `work` bound with a correlation scope. When `work` is executed 
 
 ```javascript
 const boundFunction = correlator.bindId((p1) => {
-  console.log('p1 is', p1)
-  console.log(correlator.getId())
-})
-boundFunction('foo') // Writes 'p1 is foo' and then a uuid to stdout
+  console.log('p1 is', p1);
+  console.log(correlator.getId());
+});
+boundFunction('foo'); // Writes 'p1 is foo' and then a uuid to stdout
 
 const boundFunction2 = correlator.bindId('my-custom-id', (p1) => {
-  console.log('p1 is', p1)
-  console.log(correlator.getId())
-})
-boundFunction('foo') // Writes 'p1 is foo' and then 'my-custom-id' to stdout
+  console.log('p1 is', p1);
+  console.log(correlator.getId());
+});
+boundFunction('foo'); // Writes 'p1 is foo' and then 'my-custom-id' to stdout
 ```
 
 ### `getId()`
 Returns the id for the current correlation scope (created via `withId` or `bindId`). If called outside of a correlation scope returns `undefined`.
 
 ```javascript
-correlator.getId() // Returns a uuid
+correlator.getId(); // Returns a uuid
 ```
 
 ## How does it work?
