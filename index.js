@@ -3,8 +3,28 @@
 const uuid = require('uuid');
 const cls = require('continuation-local-storage');
 
-function isFunction (object) {
-  return typeof object === 'function';
+const store = cls.createNamespace('1d0e0c48-3375-46bc-b9ae-95c63b58938e');
+
+module.exports = {
+  withId: configureArgs(withId),
+  bindId: configureArgs(bindId),
+  getId
+};
+
+function withId (id, work) {
+  store.run(() => {
+    store.set('correlator', id);
+    work();
+  });
+}
+
+function bindId (id, work) {
+  return function () {
+    store.run(() => {
+      store.set('correlator', id);
+      work.apply(null, [].slice.call(arguments));
+    });
+  };
 }
 
 function configureArgs (func) {
@@ -19,30 +39,10 @@ function configureArgs (func) {
   };
 }
 
-const store = cls.createNamespace('1d0e0c48-3375-46bc-b9ae-95c63b58938e');
-
-const withId = configureArgs((id, work) => {
-  store.run(() => {
-    store.set('correlator', id);
-    work();
-  });
-});
-
-const bindId = configureArgs((id, work) => {
-  return function () {
-    store.run(() => {
-      store.set('correlator', id);
-      work.apply(null, [].slice.call(arguments));
-    });
-  };
-});
+function isFunction (object) {
+  return typeof object === 'function';
+}
 
 function getId () {
   return store.get('correlator');
 }
-
-module.exports = {
-  withId,
-  bindId,
-  getId
-};
