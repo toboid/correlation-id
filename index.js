@@ -41,16 +41,8 @@ function getId () {
   return store.get('correlator');
 }
 
-function express () {
-  return (req, res, next) => {
-    // TODO: set id if it's present in the incoming request header
-    withId(next);
-  };
-}
-
 module.exports = {
   withId,
   bindId,
-  getId,
-  express
+  getId
 };

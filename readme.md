@@ -41,22 +41,6 @@ correlator.withId('my-custom-id', () => {
 // withId block 1, call 2 id: 5816e2d3-6b90-43be-8738-f6e1b2654f39
 ```
 
-## Express middleware
-An express middleware is included. All middleware and route handlers following `correlator.express()` middleware will be within a single correlation scope.
-
-```javascript
-const correlator = require('correlation-id');
-const express = require('express');
-
-const app = express()
-app.use(correlator.express());
-
-app.get('/', (req, res) => {
-  console.log('ID for this request is:', correlator.getId())
-  res.end()
-})
-```
-
 ## API
 ### `withId([id,] work)`
 Executes function `work` within a correlation scope. Within work and any other function executions (sync or async) calls to `getId()` will return the same id. The id for the context may be set explicitly with the optional `id` parameter, otherwise it will be a v4 uuid. Calls to `withId()` may be nested.
@@ -92,14 +76,6 @@ Returns the id for the current correlation scope (created via `withId` or `bindI
 
 ```javascript
 correlator.getId() // Returns a uuid
-```
-
-### `express()`
-Returns an express middleware that creates a correlation scope for all following middleware and route handlers.
-
-```javascript
-const app = express()
-app.use(correlator.express())
 ```
 
 ## How does it work?
