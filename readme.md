@@ -75,7 +75,7 @@ boundFunction('foo'); // Writes 'p1 is foo' and then 'my-custom-id' to stdout
 Returns the id for the current correlation scope (created via `withId` or `bindId`). If called outside of a correlation scope returns `undefined`.
 
 ```javascript
-correlator.getId(); // Returns a uuid
+correlator.getId(); // Returns the current id or undefined
 ```
 
 ## How does it work?
