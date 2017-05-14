@@ -4,6 +4,8 @@
 [![npm version](https://badge.fury.io/js/correlation-id.svg)](https://badge.fury.io/js/correlation-id)
 
 # Correlation id
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/toboid/correlation-id.svg)](https://greenkeeper.io/)
 Correlation id maintains a consistent id across asynchronous calls in node.js applications.
 This is extremely useful for logging purposes. For example within a web application, each incoming request can be assigned an id that will be available in all function calls made processing that request, so we can see which requests caused errors.
 
