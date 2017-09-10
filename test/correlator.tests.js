@@ -107,16 +107,25 @@ test.cb('nested bindId correlator', t => {
 });
 
 test.cb('withId works with native promises', t => {
-  function promiseForId () {
-    return Promise.resolve(correlator.getId());
-  }
+  const promiseForId = () => Promise.resolve(correlator.getId());
 
   correlator.withId(() => {
     promiseForId()
       .then(id => {
         t.regex(id, uuidMatcher, 'Promise should resolve correlation id');
+        t.is(id, correlator.getId(), 'getId() should return a consistent id within a correlation scope');
         t.end();
       });
+  });
+});
+
+test.skip('withId works with async/await', async t => {
+  const promiseForId = () => Promise.resolve(correlator.getId());
+
+  correlator.withId(async () => {
+    const id = await promiseForId();
+    t.regex(id, uuidMatcher, 'Promise should resolve correlation id');
+    t.is(id, correlator.getId(), 'getId() should return a consistent id within a correlation scope');
   });
 });
 
@@ -127,3 +136,4 @@ test('withId throws for missing work paramter', t => {
 test('bindId throws for missing work paramter', t => {
   t.throws(() => correlator.bindId(), 'Missing work parameter', 'bindId() should throw if work parameter is missing');
 });
+
