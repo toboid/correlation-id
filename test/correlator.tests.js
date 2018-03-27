@@ -119,7 +119,7 @@ test.cb('withId works with native promises', t => {
   });
 });
 
-test.skip('withId works with async/await', async t => {
+test('withId works with async/await', async t => {
   const promiseForId = () => Promise.resolve(correlator.getId());
 
   correlator.withId(async () => {
