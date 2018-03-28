@@ -79,9 +79,6 @@ Returns the id for the current correlation scope (created via `withId` or `bindI
 correlator.getId(); // Returns the current id or undefined
 ```
 
-## Limitations
-Async/await is not yet supported.
-
 ## How does it work?
 Currently this module a slim wrapper over [continuation-local-storage](https://github.com/othiym23/node-continuation-local-storage). I intend to move to async-hook when it's generally available.
 
