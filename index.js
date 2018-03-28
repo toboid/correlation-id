@@ -1,7 +1,7 @@
 'use strict';
 
 const uuid = require('uuid');
-const cls = require('continuation-local-storage');
+const cls = require('cls-hooked');
 
 const store = cls.createNamespace('1d0e0c48-3375-46bc-b9ae-95c63b58938e');
 
