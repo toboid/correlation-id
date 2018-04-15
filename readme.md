@@ -80,7 +80,7 @@ correlator.getId(); // Returns the current id or undefined
 ```
 
 ## How does it work?
-Currently this module a slim wrapper over [continuation-local-storage](https://github.com/othiym23/node-continuation-local-storage). I intend to move to async-hook when it's generally available.
+Currently this module is a slim wrapper over [cls-hooked](https://github.com/jeff-lewis/cls-hooked). I intend to move to async-hook in future.
 
 ## License
 MIT
