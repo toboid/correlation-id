@@ -12,9 +12,9 @@ module.exports = {
 };
 
 function withId (id, work) {
-  store.run(() => {
+  return store.runAndReturn(() => {
     store.set('correlator', id);
-    work();
+    return work();
   });
 }
 
