@@ -20,9 +20,9 @@ function withId (id, work) {
 
 function bindId (id, work) {
   return function () {
-    store.run(() => {
+    return store.runAndReturn(() => {
       store.set('correlator', id);
-      work.apply(null, [].slice.call(arguments));
+      return work.apply(null, [].slice.call(arguments));
     });
   };
 }
