@@ -44,7 +44,7 @@ correlator.withId('my-custom-id', () => {
 
 ## API
 ### `withId([id,] work)`
-Executes function `work` within a correlation scope. Within work and any other function executions (sync or async) calls to `getId()` will return the same id. The id for the context may be set explicitly with the optional `id` parameter, otherwise it will be a v4 uuid. Calls to `withId()` may be nested.
+Executes function `work` within a correlation scope and returns any result returned from `work`. Within work and any other function executions (sync or async) calls to `getId()` will return the same id. The id for the context may be set explicitly with the optional `id` parameter, otherwise it will be a v4 uuid. Calls to `withId()` may be nested.
 
 ```javascript
 correlator.withId(() => {
