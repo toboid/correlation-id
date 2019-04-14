@@ -25,7 +25,7 @@ test.cb('withId correlator for async function', t => {
 
 test('withId correlator for async function returning value', async t => {
   const actual = await correlator.withId(() => {
-    return 'foo'
+    return 'foo';
   });
   t.is(actual, 'foo', 'withId() should return value returned by callback');
 });
@@ -61,7 +61,7 @@ test.cb('bindId correlator for async function', t => {
 
 test('bindId correlator for async function returning value', async t => {
   const boundFunction = correlator.bindId(() => {
-    return 'foo'
+    return 'foo';
   });
   const actual = await boundFunction();
   t.is(actual, 'foo', 'bindId() should return value from callback function');
