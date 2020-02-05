@@ -1,9 +1,3 @@
-[![Build Status](https://travis-ci.org/toboid/correlation-id.svg?branch=master)](https://travis-ci.org/toboid/correlation-id)
-[![Coverage Status](https://coveralls.io/repos/github/toboid/correlation-id/badge.svg?branch=master)](https://coveralls.io/github/toboid/correlation-id?branch=master)
-[![Dependencies](https://david-dm.org/toboid/correlation-id.svg)](https://github.com/toboid/correlation-id/blob/master/package.json)
-[![npm version](https://badge.fury.io/js/correlation-id.svg)](https://badge.fury.io/js/correlation-id)
-[![Greenkeeper badge](https://badges.greenkeeper.io/toboid/correlation-id.svg)](https://greenkeeper.io/)
-
 # Correlation id
 Correlation id maintains a consistent id across asynchronous calls in node.js applications.
 This is extremely useful for logging purposes. For example within a web application, each incoming request can be assigned an id that will be available in all function calls made processing that request, so we can see which requests caused errors.
