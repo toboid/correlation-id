@@ -9,9 +9,10 @@
     "examples"
   ],
   "scripts": {
+    "lint": "prettier --write . && eslint .",
+    "fmt": "prettier --write .",
     "test": "jest",
     "coverage": "jest --coverage",
-    "lint": "eslint index.js __tests__/*.js examples/*.js",
     "coveralls": "coveralls < coverage/lcov.info"
   },
   "repository": {
@@ -34,8 +35,9 @@
   },
   "devDependencies": {
     "coveralls": "^3.1.0",
-    "eslint": "^6.6.0",
-    "eslint-config-toboid": "^2.0.0",
-    "jest": "^26.6.3"
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.1.2"
   }
 }

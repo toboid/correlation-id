@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const http = require('http');
-const correlator = require('../index.js');
+const http = require("http");
+const correlator = require("../index.js");
 
 const server = http.createServer((req, res) => {
   correlator.withId(() => {
@@ -13,7 +13,7 @@ const server = http.createServer((req, res) => {
   });
 });
 
-function getRandomNumber (callback) {
+function getRandomNumber(callback) {
   setTimeout(() => {
     console.log(`${correlator.getId()} getting random number`);
 
@@ -25,5 +25,5 @@ server.listen(3000, (err) => {
   if (err) {
     return console.error(err);
   }
-  console.log('Example app listening on port 3000');
+  console.log("Example app listening on port 3000");
 });
