@@ -145,10 +145,10 @@ test('withId works with async/await', async t => {
 });
 
 test('withId throws for missing work paramter', t => {
-  t.throws(() => correlator.withId(), 'Missing work parameter', 'withId() should throw if work parameter is missing');
+  t.throws(() => correlator.withId(), { message: 'Missing work parameter' }, 'withId() should throw if work parameter is missing');
 });
 
 test('bindId throws for missing work paramter', t => {
-  t.throws(() => correlator.bindId(), 'Missing work parameter', 'bindId() should throw if work parameter is missing');
+  t.throws(() => correlator.bindId(), { message: 'Missing work parameter' }, 'bindId() should throw if work parameter is missing');
 });
 
