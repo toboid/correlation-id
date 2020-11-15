@@ -1,7 +1,7 @@
 # Correlation id
 
 Correlation id maintains a consistent id across asynchronous calls in node.js applications.
-This is extremely useful for logging purposes. For example within a web application, each incoming request can be assigned an id that will be available in all function calls made processing that request, so we can see which requests caused errors.
+This is extremely useful for logging purposes. For example within an API, each incoming request can be assigned an id that will be available in all function calls made processing that request, so we can see which requests caused errors.
 
 ## Installation
 
@@ -81,10 +81,6 @@ Returns the id for the current correlation scope (created via `withId` or `bindI
 ```javascript
 correlator.getId(); // Returns the current id or undefined
 ```
-
-## How does it work?
-
-Currently this module is a slim wrapper over [cls-hooked](https://github.com/jeff-lewis/cls-hooked). I intend to move to async-hook in future.
 
 ## License
 
