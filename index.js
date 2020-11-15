@@ -1,9 +1,9 @@
 'use strict';
 
+const { AsyncLocalStorage } = require('async_hooks');
 const uuid = require('uuid');
-const cls = require('cls-hooked');
 
-const store = cls.createNamespace('1d0e0c48-3375-46bc-b9ae-95c63b58938e');
+const asyncLocalStorage = new AsyncLocalStorage();
 
 module.exports = {
   withId: configureArgs(withId),
@@ -12,16 +12,14 @@ module.exports = {
 };
 
 function withId (id, work) {
-  return store.runAndReturn(() => {
-    store.set('correlator', id);
+  return asyncLocalStorage.run({ id }, () => {
     return work();
   });
 }
 
 function bindId (id, work) {
   return function () {
-    return store.runAndReturn(() => {
-      store.set('correlator', id);
+    return asyncLocalStorage.run({ id }, () => {
       return work.apply(null, [].slice.call(arguments));
     });
   };
@@ -44,5 +42,6 @@ function isFunction (object) {
 }
 
 function getId () {
-  return store.get('correlator');
+  const store = asyncLocalStorage.getStore();
+  return store && store.id;
 }
