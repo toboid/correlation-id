@@ -12,17 +12,17 @@ module.exports = {
 };
 
 function withId (id, work) {
-  return asyncLocalStorage.run({ id }, () => {
-    return work();
-  });
+  return asyncLocalStorage.run(
+    { id },
+    () => work(),
+  );
 }
 
 function bindId (id, work) {
-  return function () {
-    return asyncLocalStorage.run({ id }, () => {
-      return work.apply(null, [].slice.call(arguments));
-    });
-  };
+  return (...args) => asyncLocalStorage.run(
+    { id },
+    () => work(...args),
+  );
 }
 
 function configureArgs (func) {
