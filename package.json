@@ -9,10 +9,10 @@
     "examples"
   ],
   "scripts": {
-    "test": "ava",
-    "coverage": "nyc --check-coverage --lines 100 npm test",
-    "lint": "eslint index.js test/*.js examples/*.js",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "lint": "eslint index.js __tests__/*.js examples/*.js",
+    "coveralls": "coveralls < coverage/lcov.info"
   },
   "repository": {
     "type": "git",
@@ -33,10 +33,9 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "ava": "^3.13.0",
-    "coveralls": "^3.0.3",
+    "coveralls": "^3.1.0",
     "eslint": "^6.6.0",
     "eslint-config-toboid": "^2.0.0",
-    "nyc": "^15.0.0"
+    "jest": "^26.6.3"
   }
 }
