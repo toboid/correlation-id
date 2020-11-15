@@ -63,7 +63,7 @@ const boundFunction2 = correlator.bindId('my-custom-id', (p1) => {
   console.log('p1 is', p1);
   console.log(correlator.getId());
 });
-boundFunction('foo'); // Writes 'p1 is foo' and then 'my-custom-id' to stdout
+boundFunction2('foo'); // Writes 'p1 is foo' and then 'my-custom-id' to stdout
 ```
 
 ### `getId()`
