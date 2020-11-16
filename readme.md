@@ -9,6 +9,9 @@ This is extremely useful for logging purposes. For example within an API, each i
 npm i correlation-id --save
 ```
 
+## Compatibility
+v4x of this library requires a minimum node version of 12.17.0. For older node versions use v3.x.
+
 ## Simple example
 
 As demonstrated by this example, all calls to `getId()` within the same `withId()` block will return the same id. The id can be supplied, otherwise a v4 uuid will be generated.

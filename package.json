@@ -8,6 +8,9 @@
     "test",
     "examples"
   ],
+  "engines": {
+    "node": ">=12.17.0"
+  },
   "scripts": {
     "lint": "prettier --write . && eslint .",
     "fmt": "prettier --write .",
