@@ -1,6 +1,6 @@
 {
   "name": "correlation-id",
-  "version": "3.1.2",
+  "version": "4.0.0",
   "description": "Correlation id for node.js",
   "main": "index.js",
   "files": [
@@ -8,11 +8,15 @@
     "test",
     "examples"
   ],
+  "engines": {
+    "node": ">=12.17.0"
+  },
   "scripts": {
-    "test": "ava",
-    "coverage": "nyc --check-coverage --lines 100 npm test",
-    "lint": "eslint index.js test/*.js examples/*.js",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "lint": "prettier --write . && eslint .",
+    "fmt": "prettier --write .",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "coveralls": "coveralls < coverage/lcov.info"
   },
   "repository": {
     "type": "git",
@@ -30,14 +34,13 @@
   },
   "homepage": "https://github.com/toboid/correlation-id#readme",
   "dependencies": {
-    "cls-hooked": "^4.2.2",
-    "uuid": "^3.3.2"
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
-    "ava": "^3.13.0",
-    "coveralls": "^3.0.3",
-    "eslint": "^6.6.0",
-    "eslint-config-toboid": "^2.0.0",
-    "nyc": "^15.0.0"
+    "coveralls": "^3.1.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.1.2"
   }
 }

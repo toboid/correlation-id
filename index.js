@@ -1,48 +1,41 @@
-'use strict';
+"use strict";
 
-const uuid = require('uuid');
-const cls = require('cls-hooked');
+const { AsyncLocalStorage } = require("async_hooks");
+const uuid = require("uuid");
 
-const store = cls.createNamespace('1d0e0c48-3375-46bc-b9ae-95c63b58938e');
+const asyncLocalStorage = new AsyncLocalStorage();
 
 module.exports = {
   withId: configureArgs(withId),
   bindId: configureArgs(bindId),
-  getId
+  getId,
 };
 
-function withId (id, work) {
-  return store.runAndReturn(() => {
-    store.set('correlator', id);
-    return work();
-  });
+function withId(id, work) {
+  return asyncLocalStorage.run({ id }, () => work());
 }
 
-function bindId (id, work) {
-  return function () {
-    return store.runAndReturn(() => {
-      store.set('correlator', id);
-      return work.apply(null, [].slice.call(arguments));
-    });
-  };
+function bindId(id, work) {
+  return (...args) => asyncLocalStorage.run({ id }, () => work(...args));
 }
 
-function configureArgs (func) {
+function configureArgs(func) {
   return (id, work) => {
     if (!work && isFunction(id)) {
       work = id;
       id = uuid.v4();
     }
-    if (!work) throw new Error('Missing work parameter');
+    if (!work) throw new Error("Missing work parameter");
 
     return func(id, work);
   };
 }
 
-function isFunction (object) {
-  return typeof object === 'function';
+function isFunction(object) {
+  return typeof object === "function";
 }
 
-function getId () {
-  return store.get('correlator');
+function getId() {
+  const store = asyncLocalStorage.getStore();
+  return store && store.id;
 }
