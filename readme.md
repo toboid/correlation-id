@@ -10,7 +10,8 @@ npm i correlation-id --save
 ```
 
 ## Compatibility
-v4x of this library requires a minimum node version of 12.17.0. For older node versions use v3.x.
+
+From v4 onwards this library requires node >=12.17.0. For older node versions use v3.x.
 
 ## Simple example
 
