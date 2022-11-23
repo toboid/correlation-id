@@ -2,7 +2,8 @@
 
 const correlator = require("../index");
 
-const uuidMatcher = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+const uuidMatcher =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
 const pause = async (waitTime) =>
   new Promise((resolve) => setTimeout(resolve, waitTime));
