@@ -25,6 +25,7 @@ function configureArgs(func) {
       work = id;
       id = randomUUID();
     }
+
     if (!work) throw new Error("Missing work parameter");
 
     return func(id, work);

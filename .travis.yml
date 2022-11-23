@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - "12"
   - "14"
-  - "15"
-script: npm run coverage
-after_success: npm run coveralls
+  - "16"
+  - "18"
+  - "19"
+script: npm run lint && npm run test:coverage
