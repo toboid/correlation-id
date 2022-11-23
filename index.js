@@ -1,7 +1,7 @@
 "use strict";
 
 const { AsyncLocalStorage } = require("async_hooks");
-const uuid = require("uuid");
+const { randomUUID } = require("crypto");
 
 const asyncLocalStorage = new AsyncLocalStorage();
 
@@ -23,7 +23,7 @@ function configureArgs(func) {
   return (id, work) => {
     if (!work && isFunction(id)) {
       work = id;
-      id = uuid.v4();
+      id = randomUUID();
     }
     if (!work) throw new Error("Missing work parameter");
 

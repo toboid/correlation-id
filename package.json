@@ -9,7 +9,7 @@
     "examples"
   ],
   "engines": {
-    "node": ">=12.17.0"
+    "node": ">=14.17.0"
   },
   "scripts": {
     "lint": "prettier --write . && eslint .",
@@ -33,9 +33,7 @@
     "url": "https://github.com/toboid/correlation-id/issues"
   },
   "homepage": "https://github.com/toboid/correlation-id#readme",
-  "dependencies": {
-    "uuid": "^8.3.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "coveralls": "^3.1.0",
     "eslint": "^7.13.0",
