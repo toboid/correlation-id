@@ -5,12 +5,8 @@ on:
   push:
     branches:
       - master
+      - gh-actions
   pull_request:
-
-# permissions:
-#   contents: read
-#   # Needed for the 'trilom/file-changes-action' action
-#   pull-requests: read
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
