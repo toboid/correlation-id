@@ -7,12 +7,15 @@ For example within an API, each incoming request can be assigned an id that will
 100% test coverage, no prod dependencies.
 
 ## Installation
+
 yarn:
+
 ```shell
 yarn add correlation-id
 ```
 
 npm:
+
 ```shell
 npm i correlation-id --save
 ```
@@ -95,6 +98,7 @@ correlator.getId(); // Returns the current id or undefined
 ```
 
 ## Typesript
+
 Type defs are included.
 
 ## License

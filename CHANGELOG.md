@@ -1,4 +1,5 @@
 # Changelog
+
 ## 5.0.0 (27th November 2022)
 
 - Drop support for node versions prior to 14
