@@ -1,4 +1,10 @@
 # Changelog
+## 5.0.0 (27th November 2022)
+
+- Drop support for node versions prior to 14
+- Remove uuid so that module no longer has any prod depdencenies
+- Update dev dev dependencies
+- Include Typescript definitions
 
 ## 4.0.0 (16th November 2020)
 

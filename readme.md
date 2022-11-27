@@ -1,17 +1,25 @@
 # Correlation id
 
-Correlation id maintains a consistent id across asynchronous calls in node.js applications.
-Useful for logging purposes. For example within an API, each incoming request can be assigned an id that will be available in all function calls made processing that request, so we can see which requests caused errors. No prod depdendencies.
+Correlation id maintains a consistent id across asynchronous calls in node.js applications; this is especially useful for logging purposes.
+
+For example within an API, each incoming request can be assigned an id that will be available in all function calls made processing that request, so we can see which requests caused errors.
+
+100% test coverage, no prod dependencies.
 
 ## Installation
+yarn:
+```shell
+yarn add correlation-id
+```
 
+npm:
 ```shell
 npm i correlation-id --save
 ```
 
 ## Compatibility
 
-From v4 onwards this library requires node >=12.17.0. For older node versions use v3.x.
+From v5 onwards this library requires node >=14. For older node versions use v3.x or v4.x.
 
 ## Simple example
 
