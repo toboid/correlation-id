@@ -173,3 +173,9 @@ describe("bindId", () => {
     }
   });
 });
+
+describe("getId", () => {
+  it("returns undefined if no correlator has been set", () => {
+    expect(correlator.getId()).toBeUndefined();
+  });
+});
