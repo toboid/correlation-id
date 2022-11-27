@@ -86,6 +86,9 @@ Returns the id for the current correlation scope (created via `withId` or `bindI
 correlator.getId(); // Returns the current id or undefined
 ```
 
+## Typesript
+Type defs are included.
+
 ## License
 
 MIT
