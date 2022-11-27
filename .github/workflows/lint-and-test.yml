@@ -1,4 +1,4 @@
-name: "Run lint and tests for correlation-id"
+name: "lint and test"
 
 on:
   workflow_dispatch:
