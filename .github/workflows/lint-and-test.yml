@@ -29,4 +29,4 @@ jobs:
           cache: "yarn"
       - run: yarn install --frozen-lockfile
       - run: yarn lint
-      - run: yarn test-coverage
+      - run: yarn test:coverage
