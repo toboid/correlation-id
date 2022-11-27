@@ -1,7 +1,7 @@
 # Correlation id
 
 Correlation id maintains a consistent id across asynchronous calls in node.js applications.
-This is extremely useful for logging purposes. For example within an API, each incoming request can be assigned an id that will be available in all function calls made processing that request, so we can see which requests caused errors.
+This is extremely useful for logging purposes. For example within an API, each incoming request can be assigned an id that will be available in all function calls made processing that request, so we can see which requests caused errors. No prod depdendencies.
 
 ## Installation
 
