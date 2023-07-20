@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.0.2 (14th July 2023)
+- Bump semver from 6.3.0 to 6.3.1.
+
 ## 5.0.0 (27th November 2022)
 
 - Drop support for node versions prior to 14
