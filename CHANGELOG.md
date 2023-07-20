@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.0.3 (20th July 2023)
+- Bump word-wrap from 1.2.3 to 1.2.4.
+
 ## 5.0.2 (14th July 2023)
 - Bump semver from 6.3.0 to 6.3.1.
 
