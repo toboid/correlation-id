@@ -97,7 +97,7 @@ Returns the id for the current correlation scope (created via `withId` or `bindI
 correlator.getId(); // Returns the current id or undefined
 ```
 
-### `setId()`
+### `setId(id)`
 
 Sets the id for the current correlation scope (created via `withId` or `bindId`). If called outside of a correlation scope throws an error.
 
