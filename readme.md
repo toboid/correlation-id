@@ -97,7 +97,15 @@ Returns the id for the current correlation scope (created via `withId` or `bindI
 correlator.getId(); // Returns the current id or undefined
 ```
 
-## Typesript
+### `setId()`
+
+Sets the id for the current correlation scope (created via `withId` or `bindId`). If called outside of a correlation scope throws an error.
+
+```javascript
+correlator.setId("my-correlation-id");
+```
+
+## Typescript
 
 Type defs are included.
 

@@ -9,6 +9,7 @@ module.exports = {
   withId: configureArgs(withId),
   bindId: configureArgs(bindId),
   getId,
+  setId,
 };
 
 function withId(id, work) {
@@ -39,4 +40,14 @@ function isFunction(object) {
 function getId() {
   const store = asyncLocalStorage.getStore();
   return store && store.id;
+}
+
+function setId(id) {
+  const store = asyncLocalStorage.getStore();
+  if (!store) {
+    throw new Error(
+      "Missing correlation scope. \nUse bindId or withId to create a correlation scope."
+    );
+  }
+  store.id = id;
 }

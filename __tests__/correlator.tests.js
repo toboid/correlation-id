@@ -179,3 +179,59 @@ describe("getId", () => {
     expect(correlator.getId()).toBeUndefined();
   });
 });
+
+describe("setId", () => {
+  it("throws error if no correlator has been set", () => {
+    expect.assertions(1);
+
+    try {
+      correlator.setId("id-1");
+    } catch (ex) {
+      expect(ex).toEqual(
+        new Error(
+          "Missing correlation scope. \nUse bindId or withId to create a correlation scope."
+        )
+      );
+    }
+  });
+
+  it("sets correlator for sync function", () => {
+    expect.assertions(1);
+
+    correlator.withId(() => {
+      correlator.setId("id-1");
+      expect(correlator.getId()).toEqual("id-1");
+    });
+  });
+
+  it("sets correlator for async function", async () => {
+    expect.assertions(1);
+
+    await correlator.withId(async () => {
+      correlator.setId("id-1");
+      await pause(1);
+      expect(correlator.getId()).toEqual("id-1");
+    });
+  });
+
+  it("setting id does not overwrite nested correlators", async () => {
+    expect.assertions(4);
+
+    await correlator.withId(async () => {
+      await pause(1);
+      correlator.setId("id-1");
+      const outerCorrelationId1 = correlator.getId();
+      expect(outerCorrelationId1).toEqual("id-1");
+
+      await correlator.withId(async () => {
+        await pause(1);
+        const innerCorrelationId = correlator.getId();
+        expect(innerCorrelationId).toMatch(uuidMatcher);
+        expect(outerCorrelationId1).not.toEqual(innerCorrelationId);
+      });
+
+      const outerCorrelationId2 = correlator.getId();
+      expect(outerCorrelationId2).toEqual(outerCorrelationId1);
+    });
+  });
+});

@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.0 (20th July 2023)
+
+- Add setId function
+
 ## 5.0.3 (20th July 2023)
 
 - Bump word-wrap from 1.2.3 to 1.2.4.
