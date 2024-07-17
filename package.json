@@ -1,6 +1,6 @@
 {
   "name": "correlation-id",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "Correlation id for node.js",
   "main": "index.js",
   "types": "index.d.ts",
