@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.0.0 (23rd October 2026)
+
+- Drop support for node versions prior to 22
+- Move tests from Jest to the built-in node test runner
+
 ## 5.1.0 (20th July 2023)
 
 - Add setId function
