@@ -15,6 +15,7 @@
     "lint": "prettier --check . && eslint .",
     "fmt": "prettier --write .",
     "test": "node --test __tests__/*.js",
+    "test:types": "npx -y -p typescript@5 tsc --noEmit --strict --module nodenext __tests__/types.test.ts",
     "test:coverage": "node --test --experimental-test-coverage --test-coverage-branches=100 --test-coverage-functions=100 --test-coverage-lines=100 --test-coverage-include=index.js __tests__/*.js"
   },
   "repository": {
