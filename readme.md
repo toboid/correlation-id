@@ -22,7 +22,7 @@ npm i correlation-id --save
 
 ## Compatibility
 
-From v5 onwards this library requires node >=14. For older node versions use v3.x or v4.x.
+From v6 onwards this library requires node >=22. For node >=14 use v5.x, and for older node versions use v3.x or v4.x.
 
 ## Simple example
 

@@ -1,5 +1,7 @@
 "use strict";
 
+const { describe, it } = require("node:test");
+const assert = require("node:assert/strict");
 const correlator = require("../index");
 
 const uuidMatcher =
@@ -10,52 +12,59 @@ const pause = async (waitTime) =>
 
 describe("withId", () => {
   it("sets correlator for sync function", () => {
-    expect.assertions(1);
+    let id;
 
     correlator.withId(() => {
-      expect(correlator.getId()).toMatch(uuidMatcher);
+      id = correlator.getId();
     });
+
+    assert.match(id, uuidMatcher);
   });
 
   it("sets correlator for async function", async () => {
-    expect.assertions(1);
+    let id;
 
     await correlator.withId(async () => {
       await pause(1);
-      expect(correlator.getId()).toMatch(uuidMatcher);
+      id = correlator.getId();
     });
+
+    assert.match(id, uuidMatcher);
   });
 
   it("sets correlator to supplied id", async () => {
-    expect.assertions(1);
-
     const testId = "id-1";
+    let id;
 
     await correlator.withId(testId, async () => {
       await pause(1);
-      expect(correlator.getId()).toEqual(testId);
+      id = correlator.getId();
     });
+
+    assert.equal(id, testId);
   });
 
   it("supports nested correlators", async () => {
-    expect.assertions(5);
+    let outerCorrelationId1;
+    let innerCorrelationId;
+    let outerCorrelationId2;
 
     await correlator.withId(async () => {
       await pause(1);
-      const outerCorrelationId1 = correlator.getId();
-      expect(outerCorrelationId1).toMatch(uuidMatcher);
+      outerCorrelationId1 = correlator.getId();
 
       await correlator.withId(async () => {
         await pause(1);
-        const innerCorrelationId = correlator.getId();
-        expect(innerCorrelationId).toMatch(uuidMatcher);
-        expect(outerCorrelationId1).not.toEqual(innerCorrelationId);
+        innerCorrelationId = correlator.getId();
       });
 
-      const outerCorrelationId2 = correlator.getId();
-      expect(outerCorrelationId2).toMatch(uuidMatcher);
-      expect(outerCorrelationId2).toEqual(outerCorrelationId1);
+      outerCorrelationId2 = correlator.getId();
     });
+
+    assert.match(outerCorrelationId1, uuidMatcher);
+    assert.match(innerCorrelationId, uuidMatcher);
+    assert.notEqual(outerCorrelationId1, innerCorrelationId);
+    assert.equal(outerCorrelationId2, outerCorrelationId1);
   });
 
   it("forwards return value from callback", async () => {
@@ -64,40 +73,41 @@ describe("withId", () => {
       return "foo";
     });
 
-    expect(result).toEqual("foo");
+    assert.equal(result, "foo");
   });
 
   it("throws if work parameter is missing", () => {
-    expect.assertions(1);
-
-    try {
-      correlator.withId();
-    } catch (ex) {
-      expect(ex).toEqual(new Error("Missing work parameter"));
-    }
+    assert.throws(
+      () => correlator.withId(),
+      new Error("Missing work parameter")
+    );
   });
 });
 
 describe("bindId", () => {
   it("sets correlator for sync function", () => {
-    expect.assertions(1);
+    let id;
 
     const boundFunction = correlator.bindId(() => {
-      expect(correlator.getId()).toMatch(uuidMatcher);
+      id = correlator.getId();
     });
 
     boundFunction();
+
+    assert.match(id, uuidMatcher);
   });
 
   it("sets correlator for async function", async () => {
-    expect.assertions(1);
+    let id;
 
     const boundFunction = correlator.bindId(async () => {
       await pause(1);
-      expect(correlator.getId()).toMatch(uuidMatcher);
+      id = correlator.getId();
     });
 
     await boundFunction();
+
+    assert.match(id, uuidMatcher);
   });
 
   it("forwards return value from callback", async () => {
@@ -108,130 +118,133 @@ describe("bindId", () => {
 
     const result = await boundFunction();
 
-    expect(result).toEqual("foo");
+    assert.equal(result, "foo");
   });
 
   it("sets correlator to supplied id", async () => {
-    expect.assertions(1);
-
     const testId = "id-1";
+    let id;
 
     const boundFunction = correlator.bindId(testId, async () => {
       await pause(1);
-      expect(correlator.getId()).toEqual(testId);
+      id = correlator.getId();
     });
     await boundFunction();
+
+    assert.equal(id, testId);
   });
 
   it("supports nested correlators", async () => {
-    expect.assertions(5);
+    let outerCorrelationId1;
+    let innerCorrelationId;
+    let outerCorrelationId2;
 
     const outerBoundFunction = correlator.bindId(async () => {
       await pause(1);
 
-      const outerCorrelationId1 = correlator.getId();
-      expect(outerCorrelationId1).toMatch(uuidMatcher);
+      outerCorrelationId1 = correlator.getId();
 
       const innerBoundFunction = correlator.bindId(async () => {
         await pause(1);
 
-        const innerCorrelationId = correlator.getId();
-        expect(innerCorrelationId).toMatch(uuidMatcher);
-        expect(outerCorrelationId1).not.toEqual(innerCorrelationId);
+        innerCorrelationId = correlator.getId();
       });
 
       await innerBoundFunction();
 
-      const outerCorrelationId2 = correlator.getId();
-      expect(outerCorrelationId2).toMatch(uuidMatcher);
-      expect(outerCorrelationId2).toEqual(outerCorrelationId1);
+      outerCorrelationId2 = correlator.getId();
     });
 
     await outerBoundFunction();
+
+    assert.match(outerCorrelationId1, uuidMatcher);
+    assert.match(innerCorrelationId, uuidMatcher);
+    assert.notEqual(outerCorrelationId1, innerCorrelationId);
+    assert.equal(outerCorrelationId2, outerCorrelationId1);
   });
 
   it("forwards arguments", async () => {
-    expect.assertions(1);
-
     const testId = "id-1";
+    let receivedArgs;
 
     const boundFunction = correlator.bindId(testId, async (...args) => {
       await pause(1);
-      expect(args).toEqual(["firstArg", "secondArg"]);
+      receivedArgs = args;
     });
 
     await boundFunction("firstArg", "secondArg");
+
+    assert.deepEqual(receivedArgs, ["firstArg", "secondArg"]);
   });
 
   it("throws if work parameter is missing", () => {
-    expect.assertions(1);
-
-    try {
-      correlator.bindId();
-    } catch (ex) {
-      expect(ex).toEqual(new Error("Missing work parameter"));
-    }
+    assert.throws(
+      () => correlator.bindId(),
+      new Error("Missing work parameter")
+    );
   });
 });
 
 describe("getId", () => {
   it("returns undefined if no correlator has been set", () => {
-    expect(correlator.getId()).toBeUndefined();
+    assert.equal(correlator.getId(), undefined);
   });
 });
 
 describe("setId", () => {
   it("throws error if no correlator has been set", () => {
-    expect.assertions(1);
-
-    try {
-      correlator.setId("id-1");
-    } catch (ex) {
-      expect(ex).toEqual(
-        new Error(
-          "Missing correlation scope. \nUse bindId or withId to create a correlation scope."
-        )
-      );
-    }
+    assert.throws(
+      () => correlator.setId("id-1"),
+      new Error(
+        "Missing correlation scope. \nUse bindId or withId to create a correlation scope."
+      )
+    );
   });
 
   it("sets correlator for sync function", () => {
-    expect.assertions(1);
+    let id;
 
     correlator.withId(() => {
       correlator.setId("id-1");
-      expect(correlator.getId()).toEqual("id-1");
+      id = correlator.getId();
     });
+
+    assert.equal(id, "id-1");
   });
 
   it("sets correlator for async function", async () => {
-    expect.assertions(1);
+    let id;
 
     await correlator.withId(async () => {
       correlator.setId("id-1");
       await pause(1);
-      expect(correlator.getId()).toEqual("id-1");
+      id = correlator.getId();
     });
+
+    assert.equal(id, "id-1");
   });
 
   it("setting id does not overwrite nested correlators", async () => {
-    expect.assertions(4);
+    let outerCorrelationId1;
+    let innerCorrelationId;
+    let outerCorrelationId2;
 
     await correlator.withId(async () => {
       await pause(1);
       correlator.setId("id-1");
-      const outerCorrelationId1 = correlator.getId();
-      expect(outerCorrelationId1).toEqual("id-1");
+      outerCorrelationId1 = correlator.getId();
 
       await correlator.withId(async () => {
         await pause(1);
-        const innerCorrelationId = correlator.getId();
-        expect(innerCorrelationId).toMatch(uuidMatcher);
-        expect(outerCorrelationId1).not.toEqual(innerCorrelationId);
+        innerCorrelationId = correlator.getId();
       });
 
-      const outerCorrelationId2 = correlator.getId();
-      expect(outerCorrelationId2).toEqual(outerCorrelationId1);
+      outerCorrelationId2 = correlator.getId();
     });
+
+    assert.equal(outerCorrelationId1, "id-1");
+    assert.match(innerCorrelationId, uuidMatcher);
+    assert.notEqual(outerCorrelationId1, innerCorrelationId);
+    assert.equal(outerCorrelationId2, outerCorrelationId1);
   });
 });
