@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node: [18, 20, 22, 24]
+        node: [22, 24, 26]
 
     steps:
       - uses: actions/checkout@v3
@@ -28,7 +28,4 @@ jobs:
           cache: "yarn"
       - run: yarn install --frozen-lockfile
       - run: yarn lint
-      - run: yarn test
-        if: matrix.node != 24
       - run: yarn test:coverage
-        if: matrix.node == 24
